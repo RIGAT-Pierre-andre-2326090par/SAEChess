@@ -1,4 +1,4 @@
-module org.example.saechess {
+module fr.iut.SAEChess {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -11,6 +11,6 @@ module org.example.saechess {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens org.example.saechess to javafx.fxml;
-    exports org.example.saechess;
+    opens fr.iut.SAEChess to javafx.fxml;
+    exports fr.iut.SAEChess;
 }
