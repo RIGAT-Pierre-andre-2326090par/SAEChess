@@ -3,12 +3,3 @@
     -fx-background-size: cover;
     -fx-background-position: center;
 }
-.tabs-label {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 400;
-    line-height: 1.1;
-    overflow: hidden;
-    text-align: center;
-    text-overflow: ellipsis;
-}

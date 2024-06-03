@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,24 +16,129 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="513.0" prefWidth="851.0" style="-fx-background-color: #302e2b;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.SAEChess.ChessController">
-   <bottom>
-      <HBox prefHeight="75.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+   <center>
+      <VBox prefHeight="367.0" prefWidth="448.0" style="-fx-background-color: #262522;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="58.0" fitWidth="58.0">
-               <image>
-                  <Image url="@img/pdp.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" top="10.0" />
-               </HBox.margin>
-            </ImageView>
+            <HBox prefHeight="96.0" prefWidth="463.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="140.0" prefWidth="227.0" style="-fx-background-color: #262522;" stylesheets="@style.css" textFill="WHITE">
+                     <graphic>
+                        <VBox prefHeight="133.0" prefWidth="148.0" style="-fx-background-color: #262522;">
+                           <children>
+                              <ImageView fitHeight="51.0" fitWidth="53.0" nodeOrientation="RIGHT_TO_LEFT">
+                                 <image>
+                                    <Image url="@img/nouvellePartie.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="50.0" top="15.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Label text="Nouvelle Partie" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="30.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="126.0" prefWidth="219.0" style="-fx-background-color: #262522;">
+                     <graphic>
+                        <VBox prefHeight="118.0" prefWidth="144.0">
+                           <children>
+                              <ImageView fitHeight="51.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/partie.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="50.0" top="15.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Label text="Parties" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="55.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #262522;">
+                     <graphic>
+                        <VBox prefHeight="118.0" prefWidth="221.0">
+                           <children>
+                              <ImageView fitHeight="51.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/joueurs.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="50.0" top="15.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Label text="Joueurs" textFill="#efefef">
+                                 <VBox.margin>
+                                    <Insets left="55.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <VBox alignment="TOP_CENTER" prefHeight="342.0" prefWidth="463.0">
+               <children>
+                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="39.0" prefWidth="230.0" style="-fx-background-color: #3c3b39;" text="10 min" textFill="WHITE">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="10min" />
+                    </items>
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@img/timer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </MenuButton>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="420.0" style="-fx-background-color: #81b64c; -fx-border-radius: 20; -fx-font-family: &quot;globalSecondaryFont&quot;; -fx-font-weight: 800; -fx-font-size: 20;" styleClass="btn" stylesheets="@style.css" text="JOUER" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="311.0" style="-fx-background-color: #1e1e1b; -fx-font-weight: 800; -fx-font-size: 20;" text="tournois" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
-      </HBox>
-   </bottom>
+      </VBox>
+   </center>
    <left>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="353.0" prefWidth="359.0">
+            <HBox prefHeight="61.0" prefWidth="600.0">
+               <children>
+                  <ImageView fitHeight="58.0" fitWidth="58.0">
+                     <image>
+                        <Image url="@img/pdp.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label style="-fx-background-color: #302e2b;" stylesheets="@style.css" text="Adversaire" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" top="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <StackPane prefHeight="353.0" prefWidth="405.0">
                <children>
                   <ImageView fitHeight="335.0" fitWidth="358.0">
                      <image>
@@ -70,88 +178,19 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </opaqueInsets>
             </StackPane>
-         </children>
-      </HBox>
-   </left>
-   <top>
-      <VBox prefHeight="70.0" prefWidth="852.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="61.0" prefWidth="600.0">
+            <HBox prefHeight="75.0" prefWidth="600.0">
                <children>
                   <ImageView fitHeight="58.0" fitWidth="58.0">
                      <image>
                         <Image url="@img/pdp.png" />
                      </image>
                      <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label style="-fx-background-color: #302e2b;" stylesheets="@style.css" text="Adversaire" textFill="WHITE">
-                     <HBox.margin>
-                        <Insets left="10.0" top="15.0" />
-                     </HBox.margin>
-                  </Label>
                </children>
             </HBox>
          </children>
       </VBox>
-   </top>
-   <center>
-      <VBox prefHeight="367.0" prefWidth="448.0" style="-fx-background-color: #262522;" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <VBox prefHeight="101.0" prefWidth="150.0">
-                     <children>
-                        <ImageView fitHeight="51.0" fitWidth="53.0" nodeOrientation="RIGHT_TO_LEFT">
-                           <image>
-                              <Image url="@img/nouvellePartie.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets left="50.0" top="15.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Label text="Nouvelle Partie" textFill="WHITE">
-                           <VBox.margin>
-                              <Insets left="30.0" />
-                           </VBox.margin></Label>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="101.0" prefWidth="153.0">
-                     <children>
-                        <ImageView fitHeight="51.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@img/partie.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets left="50.0" top="15.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Label text="Parties" textFill="WHITE">
-                           <VBox.margin>
-                              <Insets left="55.0" />
-                           </VBox.margin></Label>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="101.0" prefWidth="152.0">
-                     <children>
-                        <ImageView fitHeight="51.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@img/joueurs.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets left="50.0" top="15.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Label text="Joueurs" textFill="#efefef">
-                           <VBox.margin>
-                              <Insets left="55.0" />
-                           </VBox.margin></Label>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </center>
+   </left>
 </BorderPane>
