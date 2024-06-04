@@ -11,7 +11,7 @@ public class ChessBoard {
 
     public List<List<ChessPiece>> board;
     public ChessBoard() {
-        board = new ArrayList<>(Arrays.asList(Arrays.asList(new Tour('N'), new Cavalier('N'), new Fou('N'), new Reine('N'), new Roi('N'), new Fou('N'), new Cavalier('N'), new Tour('N')),
+        board = new ArrayList<>(Arrays.asList(Arrays.asList(new Tour(false,0,0), new Cavalier(false,0,1), new Fou(false,0,2), new Reine(false,0,3), new Roi(false,0,4), new Fou(false,0,5), new Cavalier(false,0,6), new Tour(false,0,7)),
             Arrays.asList(new Pion(false, 1, 0), new Pion(false, 1, 1), new Pion(false, 1, 2), new Pion(false, 1, 3), new Pion(false, 1, 4), new Pion(false, 1, 5), new Pion(false, 1, 6), new Pion(false, 1, 7)),
             Arrays.asList(null, null, null, null, null, null, null, null),
             Arrays.asList(null, null, null, null, null, null, null, null),
@@ -19,8 +19,8 @@ public class ChessBoard {
             Arrays.asList(null, null, null, null, null, null, null, null),
             Arrays.asList(null, null, null, null, null, null, null, null),
             Arrays.asList(null, null, null, null, null, null, null, null),
-            Arrays.asList(new Pion(false, 6, 0), new Pion(false, 6, 1), new Pion(false, 6, 2), new Pion(false, 6, 3), new Pion(false, 6, 4), new Pion(false, 6, 5), new Pion(false, 6, 6), new Pion(false, 6, 7)),
-            Arrays.asList(new Tour('B'), new Cavalier('B'), new Fou('B'), new Reine('B'), new Roi('B'), new Fou('B'), new Cavalier('B'), new Tour('B'))));
+            Arrays.asList(new Pion(true, 6, 0), new Pion(true, 6, 1), new Pion(true, 6, 2), new Pion(true, 6, 3), new Pion(true, 6, 4), new Pion(true, 6, 5), new Pion(true, 6, 6), new Pion(true, 6, 7)),
+            Arrays.asList(new Tour(true,7,0), new Cavalier(true,7,1), new Fou(true,7,2), new Reine(true,7,3), new Roi(true,7,4), new Fou(true,7,5), new Cavalier(true,7,6), new Tour(true,7,7))));
     }
 
     public void set(int x, int y, ChessPiece piece) {
@@ -29,14 +29,6 @@ public class ChessBoard {
 
     public ChessPiece get(int x, int y) {
         return board.get(x).get(y);
-    }
-
-    public void rmPremove(){
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board.get(i).size(); j++) {
-                if (board.get(i).get(j) instanceof PreMoveTile) board.get(i).set(j, null);
-            }
-        }
     }
 
     public void swap(int x, int y, int x2, int y2){
