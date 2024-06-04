@@ -9,8 +9,6 @@ import java.io.IOException;
 
 public class ChessApplication extends Application {
 
-
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ChessApplication.class.getResource("chess-view.fxml"));
@@ -20,6 +18,7 @@ public class ChessApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
     public static void main(String[] args) {
         launch(args);
     }
