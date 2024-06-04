@@ -1,7 +1,6 @@
 package fr.iut.SAEChess;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -57,6 +56,42 @@ public class ChessAccount {
             }
             else {
                 /*notRegistered()*/                                 // Fonction à créer. Affiche une fenêtre qui dit "pas encore inscrit"
+            }
+        }
+        catch (IOException ioException){
+
+        }
+    }
+
+    /*
+    Fonction qui prend en paramètres un nom et un mot de passe rentrés dans des textFields.
+    Cette fonction parcourt le fichier des joueurs pour savoir si le joueur est déjà inscrit ou pas.
+    Si oui, elle l'indique au joueur. Si non, elle ajoute son nom et mot de passe hashé au fichier joueur, et initialise ses statistiques à 0.
+
+    Cette fonction sera appelée à l'appui du bouton approprié
+     */
+    public void register(String nom, String passwd) {
+        try {
+            Scanner s = new Scanner(new File("Joueurs.txt"));
+            ArrayList<String> playerList = new ArrayList<String>();
+            while (s.hasNext()) {
+                playerList.add(s.next());
+            }
+            s.close();
+
+            boolean registered = false;
+            for (int i = 0 ; i < playerList.size() ; ++i) {
+                String[] playerInfo = playerList.get(i).split(",\\s*");
+                if (playerInfo[0] == nom && playerInfo[1] == Integer.toString(passwd.hashCode())) {
+                    registered = true;
+                }
+            }
+            if(registered) {
+                /*alreadyRegistered();*/                                                // Fonction à créer. Affiche une fenêtre qui dit "déjà inscrit"
+            }
+            else {
+                FileWriter fw = new FileWriter("Joueurs.txt", true);    // Ecrit sur le fichier passé en paramètre. Le "true" indique qu'il ajoutera le contenu au fichier déjà existant plutôt que d'en créer un autre
+                fw.write(nom + ", " + passwd + ", 0, 0\n");
             }
         }
         catch (IOException ioException){
