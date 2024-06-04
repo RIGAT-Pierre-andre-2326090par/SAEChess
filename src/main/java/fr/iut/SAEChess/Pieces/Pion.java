@@ -8,7 +8,7 @@ public class Pion extends ChessPiece {
     public Pion(boolean blanc, int x, int y) {
         super(blanc, "", x, y);
         if (blanc) setImg("pionB.png");
-        else super(blanc, "", x, y);
+        else setImg("pionN.png");
     }
 
     @Override

@@ -1,20 +1,22 @@
 package fr.iut.SAEChess.Pieces;
 
+import fr.iut.SAEChess.ChessBoard;
 import fr.iut.SAEChess.ChessPiece;
 
 public class Cavalier extends ChessPiece {
-
-    public Cavalier(char Team) {
-        super(Team, "pion" + team + ".png");
+    public Cavalier(boolean blanc, int x, int y) {
+        super(blanc, "", x, y);
+        if (blanc) setImg("cavalierB.png");
+        else setImg("cavalierN.png");
     }
 
     @Override
-    public void premove() {
-
+    public boolean isValidMove(int x, int y, ChessBoard board) {
+        return false;
     }
 
     @Override
-    public void move() {
-
+    public int[][] imagineAllMoves(ChessBoard board) {
+        return new int[0][];
     }
 }
