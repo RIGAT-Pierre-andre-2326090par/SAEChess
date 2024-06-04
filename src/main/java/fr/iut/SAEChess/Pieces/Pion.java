@@ -19,7 +19,7 @@ public class Pion extends ChessPiece {
         else if (isBlanc()) {
             if (getX() == 6 && x - getX() == -2 && x - getX() == -1 && y - getY() == 0) return true;
             else if (x - getX() == -1 && y - getY() == 0) return true;
-            else if (!board.get(x, y).isBlanc()) return x - getX() == -1 && abs(y - getY()) <= 1;
+            else if (board.get(x, y).isBlanc()) return x - getX() == -1 && abs(y - getY()) <= 1;
         } else {
             if (getX() == 1 && x - getX() == 2 && x - getX() == 1 && y - getY() == 0) return true;
             else if (x - getX() == 1 && y - getY() == 0) return true;

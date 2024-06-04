@@ -1,6 +1,5 @@
 package fr.iut.SAEChess;
 
-import com.almasb.fxgl.app.services.FXGLAssetLoaderService;
 import fr.iut.SAEChess.Pieces.*;
 
 import java.util.ArrayList;
