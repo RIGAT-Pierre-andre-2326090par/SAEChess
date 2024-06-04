@@ -13,11 +13,23 @@ public class Fou extends ChessPiece {
 
     @Override
     public boolean isValidMove(int x, int y, ChessBoard board) {
+        if (x < 0 || x >= 8 || y < 0 || y >= 8){ return false;}
+        int deltaX = x - this.getX();
+        int deltaY = y - this.getY();
+        if (Math.abs(deltaX) == Math.abs(deltaY)) {
+            return true;
+        }
         return false;
     }
-
     @Override
     public int[][] imagineAllMoves(ChessBoard board) {
-        return new int[0][];
+        int[][] moves = new int[4][];
+        int ind = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (isValidMove(i, j, board)) moves[ind++] = new int[]{i, j};
+            }
+        }
+        return moves;
     }
 }
