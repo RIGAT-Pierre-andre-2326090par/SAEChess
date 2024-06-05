@@ -36,9 +36,6 @@ public class ChessController implements Initializable {
     @FXML
     private GridPane Gboard;
 
-    @FXML
-    private GridPane Pboard;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -61,32 +58,34 @@ public class ChessController implements Initializable {
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
                 int finalI = i;
                 int finalJ = j;
-                tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
-                        setPremove(board.get(finalI, finalJ).imagineAllMoves(board), board)
-                );
+                tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                        setPremove(finalI, finalJ, board.get(finalI, finalJ).imagineAllMoves(board), board);
+                        System.out.println("premove set");
+                });
                 Gboard.add(tmp, j, i);
             }
         }
     }
 
-    private void setPremove(int[][] poss, ChessBoard board) {
+    private void setPremove(int x, int y,int[][] poss, ChessBoard board) {
         int ind = 0;
         while (ind < poss.length) {
             for (int i = 0; i < board.board.size(); i++) {
                 for (int j = 0; j < board.board.get(i).size(); j++) {
                     ImageView tmp;
+                    if (board.get(i, j) != null)
+                        tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
+                    else tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
+
                     if (ind < poss.length && poss[ind].equals(new int[]{i, j})) {
-                        tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/led.png"))));
+                        int finalI = i;
+                        int finalJ = j;
+                        tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                            board.swap(x, y, finalI, finalJ);
+                            System.out.println("piece moved");
+                        });
                         ++ind;
-                    } else
-                        tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
-                    int finalI = i;
-                    int finalJ = j;
-                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                        setPremove(board.get(finalI, finalJ).imagineAllMoves(board), board);
-                        System.out.println("premove set");
-                    });
-                    Pboard.add(tmp, j, i);
+                    }
                 }
             }
         }
