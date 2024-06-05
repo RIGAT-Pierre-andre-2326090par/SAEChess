@@ -4,8 +4,8 @@ public class Premove extends ChessPiece {
     private final int xStart;
     private final int yStart;
 
-    public Premove(boolean blancPremove,int x, int y, int xStart, int yStart) {
-        super(blancPremove, "led.png", x, y);
+    public Premove(boolean blancPremove, int x, int y, int xStart, int yStart) {
+        super(blancPremove, "", x, y);
         this.xStart = xStart;
         this.yStart = yStart;
     }

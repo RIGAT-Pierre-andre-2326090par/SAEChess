@@ -25,7 +25,7 @@ public class Tour extends ChessPiece {
 
     @Override
     public int[][] imagineAllMoves(ChessBoard board) {
-        int[][] moves = new int[4][];
+        int[][] moves = new int[50][];
         int ind = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
