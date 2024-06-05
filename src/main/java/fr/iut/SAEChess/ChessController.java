@@ -56,11 +56,11 @@ public class ChessController implements Initializable {
     @FXML
     private void handleSwitchButtonAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Partie.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Jouer.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root,1053,683);
+            Scene scene = new Scene(root,1096,675);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
