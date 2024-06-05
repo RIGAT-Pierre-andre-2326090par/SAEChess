@@ -1,0 +1,13 @@
+.topButton {
+    -fx-background-color: #21201d;
+    -fx-border-width: 0;
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-font-family: "cubik";
+    -fx-font-weight: bold;
+}
+.topButton:hover {
+    -fx-background-color: #262522;
+    -fx-text-fill: #000000;
+    -fx-cursor: hand;
+}

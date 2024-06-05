@@ -11,9 +11,9 @@
          <children>
             <HBox prefHeight="96.0" prefWidth="463.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="140.0" prefWidth="227.0" style="-fx-background-color: #262522;" stylesheets="@style.css" textFill="WHITE">
+                  <Button mnemonicParsing="false" prefHeight="140.0" prefWidth="227.0" styleClass="topButton" textFill="WHITE">
                      <graphic>
-                        <VBox prefHeight="133.0" prefWidth="148.0" style="-fx-background-color: #262522;">
+                        <VBox prefHeight="133.0" prefWidth="148.0">
                            <children>
                               <ImageView fitHeight="51.0" fitWidth="53.0" nodeOrientation="RIGHT_TO_LEFT">
                                  <image>
@@ -32,7 +32,7 @@
                         </VBox>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="126.0" prefWidth="219.0" style="-fx-background-color: #262522;">
+                  <Button mnemonicParsing="false" prefHeight="126.0" prefWidth="219.0" styleClass="topButton" >
                      <graphic>
                         <VBox prefHeight="118.0" prefWidth="144.0">
                            <children>
@@ -53,7 +53,7 @@
                         </VBox>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" style="-fx-background-color: #262522;">
+                  <Button mnemonicParsing="false"  styleClass="topButton">
                      <graphic>
                         <VBox prefHeight="118.0" prefWidth="221.0">
                            <children>
