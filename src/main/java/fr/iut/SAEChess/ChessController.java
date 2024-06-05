@@ -43,10 +43,12 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {setGame();});
+        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            setGame();
+        });
     }
 
-    private void setGame(){
+    private void setGame() {
         ChessBoard board = new ChessBoard();
         updateBoard(board);
     }
@@ -57,7 +59,8 @@ public class ChessController implements Initializable {
                 ImageView tmp;
                 if (board.get(i, j) != null)
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
-                else tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
+                else
+                    tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
                 int finalI = i;
                 int finalJ = j;
                 tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
@@ -77,7 +80,8 @@ public class ChessController implements Initializable {
                     if (ind < poss.length && poss[ind].equals(new int[]{i, j})) {
                         tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/led.png"))));
                         ++ind;
-                    } else tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
+                    } else
+                        tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
                     int finalI = i;
                     int finalJ = j;
                     tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -87,21 +91,6 @@ public class ChessController implements Initializable {
                     Pboard.add(tmp, j, i);
                 }
             }
-        }
-    }
-
-    @FXML
-    private void handleSwitchButtonAction(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Jouer.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root,1096,675);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
