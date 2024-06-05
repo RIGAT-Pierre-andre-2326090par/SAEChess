@@ -102,7 +102,7 @@ public class ChessAccount {
                 playerList.add(nom + ", " + passwd.hashCode() + ", 0, 0");
                 System.out.println(playerList);
             }
-            FileWriter fw = new FileWriter("Joueurs.txt", false);    // Ecrit sur le fichier passé en paramètre. Le "true" indique qu'il ajoutera le contenu au fichier déjà existant plutôt que d'en créer un autre
+            FileWriter fw = new FileWriter("Joueurs.txt", false);       // Ecrit sur le fichier passé en paramètre. Le "false" indique que le fichier sera réécrit de 0
             for (int i = 0 ; i < playerList.size() ; ++i) {
                 fw.write(playerList.get(i));
                 fw.write("\n");
