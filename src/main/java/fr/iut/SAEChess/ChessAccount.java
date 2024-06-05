@@ -1,9 +1,12 @@
 package fr.iut.SAEChess;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class ChessAccount {
     float elo;                                                          // Le classement du joueur
@@ -64,7 +67,7 @@ public class ChessAccount {
                 setWins(Integer.parseInt(playerInfo[3]));
             }
             else {
-                /*ChessController.notRegistered()*/                                 // Fonction à créer. Affiche une fenêtre qui dit "pas encore inscrit"
+                /*notRegistered()*/                                 // Fonction à créer. Affiche une fenêtre qui dit "pas encore inscrit"
             }
         }
         catch (IOException ioException){
@@ -93,13 +96,13 @@ public class ChessAccount {
             }
             if(registered) {
                 System.out.println("Déjà inscrit");
-                /*ChessControler.alreadyRegistered();*/                                                // Fonction à créer. Affiche une fenêtre qui dit "déjà inscrit"
+                /*alreadyRegistered();*/                                                // Fonction à créer. Affiche une fenêtre qui dit "déjà inscrit"
             }
             else {
                 playerList.add(nom + ", " + passwd.hashCode() + ", 0, 0");
                 System.out.println(playerList);
             }
-            FileWriter fw = new FileWriter("Joueurs.txt", false);       // Ecrit sur le fichier passé en paramètre. Le "false" indique que le fichier sera réécrit de 0
+            FileWriter fw = new FileWriter("Joueurs.txt", false);    // Ecrit sur le fichier passé en paramètre. Le "true" indique qu'il ajoutera le contenu au fichier déjà existant plutôt que d'en créer un autre
             for (int i = 0 ; i < playerList.size() ; ++i) {
                 fw.write(playerList.get(i));
                 fw.write("\n");
