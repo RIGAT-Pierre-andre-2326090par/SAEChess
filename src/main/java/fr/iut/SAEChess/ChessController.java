@@ -1,7 +1,5 @@
 package fr.iut.SAEChess;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
