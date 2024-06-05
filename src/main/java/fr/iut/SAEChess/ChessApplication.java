@@ -19,7 +19,6 @@ public class ChessApplication extends Application {
         primaryStage.setTitle("Chess");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
     public static void main(String[] args) {
         launch(args);

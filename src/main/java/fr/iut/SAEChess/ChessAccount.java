@@ -1,7 +1,11 @@
 package fr.iut.SAEChess;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class ChessAccount {
@@ -24,6 +28,19 @@ public class ChessAccount {
         this.wins = wins;
     }
 
+
+    public ArrayList<String> readFileToArray(File file) throws IOException {
+        ArrayList<String> list = new ArrayList<String>();
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line = br.readLine();
+        while (line != null) {
+            list.add(line);
+            line = br.readLine();
+        }
+
+        return list;
+    }
+
     /*
     Fonction qui prend en paramètres un nom et un mot de passe rentrés dans des textFields.
     Cette fonction parcourt le fichier des joueurs pour savoir si le joueur est déjà inscrit ou pas.
@@ -33,12 +50,7 @@ public class ChessAccount {
      */
     public void logIn(String nom, String passwd) {
         try {
-            Scanner s = new Scanner(new File("Joueurs.txt"));
-            ArrayList<String> playerList = new ArrayList<String>();
-            while (s.hasNext()) {
-                playerList.add(s.next());
-            }
-            s.close();
+            ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
 
             boolean registered = false;
             int indexPlayer = 0;
@@ -72,30 +84,33 @@ public class ChessAccount {
      */
     public void register(String nom, String passwd) {
         try {
-            Scanner s = new Scanner(new File("Joueurs.txt"));
-            ArrayList<String> playerList = new ArrayList<String>();
-            while (s.hasNext()) {
-                playerList.add(s.next());
-            }
-            s.close();
+            ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
+            System.out.println(playerList);
 
             boolean registered = false;
             for (int i = 0 ; i < playerList.size() ; ++i) {
-                String[] playerInfo = playerList.get(i).split(",\\s*");
-                if (playerInfo[0] == nom && playerInfo[1] == Integer.toString(passwd.hashCode())) {
+                List<String> playerInfo = Arrays.asList(playerList.get(i).split(", "));
+                if (playerInfo.get(0).equals(nom) && playerInfo.get(1).equals(Integer.toString(passwd.hashCode()))) {
                     registered = true;
                 }
             }
             if(registered) {
+                System.out.println("Déjà inscrit");
                 /*alreadyRegistered();*/                                                // Fonction à créer. Affiche une fenêtre qui dit "déjà inscrit"
             }
             else {
-                FileWriter fw = new FileWriter("Joueurs.txt", true);    // Ecrit sur le fichier passé en paramètre. Le "true" indique qu'il ajoutera le contenu au fichier déjà existant plutôt que d'en créer un autre
-                fw.write(nom + ", " + passwd + ", 0, 0\n");
+                playerList.add(nom + ", " + passwd.hashCode() + ", 0, 0");
+                System.out.println(playerList);
             }
+            FileWriter fw = new FileWriter("Joueurs.txt", false);    // Ecrit sur le fichier passé en paramètre. Le "true" indique qu'il ajoutera le contenu au fichier déjà existant plutôt que d'en créer un autre
+            for (int i = 0 ; i < playerList.size() ; ++i) {
+                fw.write(playerList.get(i));
+                fw.write("\n");
+            }
+            fw.close();
         }
         catch (IOException ioException){
-
+            ioException.printStackTrace();
         }
     }
 }
