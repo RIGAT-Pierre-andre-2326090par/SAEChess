@@ -35,4 +35,13 @@ public class ChessBoard {
         board.get(x).set(y, board.get(x2).get(y2));
         board.get(x2).set(y2, tmp);
     }
+
+    public void take(int x, int y, int x2, int y2){
+        board.get(x2).set(y2, board.get(x).get(y));
+        board.get(x).set(y, null);
+    }
+
+    public void joue(){
+
+    }
 }
