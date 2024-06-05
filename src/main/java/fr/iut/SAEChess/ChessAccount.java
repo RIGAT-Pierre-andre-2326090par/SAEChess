@@ -9,27 +9,27 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ChessAccount {
-    float elo;                                                          // Le classement du joueur
-    int wins;                                                           // Le nombre de victoires du joueur
+    static float elo;                                                          // Le classement du joueur
+    static int wins;                                                           // Le nombre de victoires du joueur
 
     // Getters
-    public float getElo() {
+    public static float getElo() {
         return elo;
     }
-    public int getWins() {
+    public static int getWins() {
         return wins;
     }
 
     // Setters
-    public void setElo(float elo) {
-        this.elo = elo;
+    public static void setElo(float elo) {
+        ChessAccount.elo = elo;
     }
-    public void setWins(int wins) {
-        this.wins = wins;
+    public static void setWins(int wins) {
+        ChessAccount.wins = wins;
     }
 
 
-    public ArrayList<String> readFileToArray(File file) throws IOException {
+    public static ArrayList<String> readFileToArray(File file) throws IOException {
         ArrayList<String> list = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line = br.readLine();
@@ -48,7 +48,7 @@ public class ChessAccount {
 
     Cette fonction sera appelée à l'appui du bouton approprié
      */
-    public void logIn(String nom, String passwd) {
+    public static void logIn(String nom, String passwd) {
         try {
             ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
 
@@ -82,7 +82,7 @@ public class ChessAccount {
 
     Cette fonction sera appelée à l'appui du bouton approprié
      */
-    public void register(String nom, String passwd) {
+    public static void register(String nom, String passwd) {
         try {
             ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
             System.out.println(playerList);
