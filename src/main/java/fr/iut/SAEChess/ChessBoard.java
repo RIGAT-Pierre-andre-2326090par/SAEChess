@@ -16,8 +16,6 @@ public class ChessBoard {
             Arrays.asList(null, null, null, null, null, null, null, null),
             Arrays.asList(null, null, null, null, null, null, null, null),
             Arrays.asList(null, null, null, null, null, null, null, null),
-            Arrays.asList(null, null, null, null, null, null, null, null),
-            Arrays.asList(null, null, null, null, null, null, null, null),
             Arrays.asList(new Pion(true, 6, 0), new Pion(true, 6, 1), new Pion(true, 6, 2), new Pion(true, 6, 3), new Pion(true, 6, 4), new Pion(true, 6, 5), new Pion(true, 6, 6), new Pion(true, 6, 7)),
             Arrays.asList(new Tour(true,7,0), new Cavalier(true,7,1), new Fou(true,7,2), new Reine(true,7,3), new Roi(true,7,4), new Fou(true,7,5), new Cavalier(true,7,6), new Tour(true,7,7))));
     }

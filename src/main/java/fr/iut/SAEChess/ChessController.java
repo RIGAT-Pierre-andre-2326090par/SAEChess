@@ -4,20 +4,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -67,6 +61,7 @@ public class ChessController implements Initializable {
     }
 
     private void updateBoard(ChessBoard board) {
+        Gboard.getChildren().clear();
         for (int i = 0; i < board.board.size(); i++) {
             for (int j = 0; j < board.board.get(i).size(); j++) {
                 ImageView tmp;
@@ -77,34 +72,30 @@ public class ChessController implements Initializable {
                 int finalI = i;
                 int finalJ = j;
                 tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                        setPremove(finalI, finalJ, board.get(finalI, finalJ).imagineAllMoves(board), board);
-                        System.out.println("premove set");
+                    setPremove(finalI, finalJ, board.get(finalI, finalJ).imagineAllMoves(board), board);
+                    System.out.println("premove set");
                 });
                 Gboard.add(tmp, j, i);
             }
         }
     }
 
-    private void setPremove(int x, int y,int[][] poss, ChessBoard board) {
-        int ind = 0;
-        while (ind < poss.length) {
-            for (int i = 0; i < board.board.size(); i++) {
-                for (int j = 0; j < board.board.get(i).size(); j++) {
-                    ImageView tmp;
-                    if (board.get(i, j) != null)
-                        tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
-                    else tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
-
-                    if (ind < poss.length && poss[ind].equals(new int[]{i, j})) {
-                        int finalI = i;
-                        int finalJ = j;
-                        tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                            board.swap(x, y, finalI, finalJ);
-                            System.out.println("piece moved");
-                        });
-                        ++ind;
-                    }
-                }
+    private void setPremove(int x, int y, int[][] poss, ChessBoard board) {
+        for (int[] pos : poss) {
+            if (pos != null) {
+                int i = pos[0];
+                int j = pos[1];
+                ImageView tmp;
+                if (board.get(i, j) != null)
+                    tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
+                else
+                    tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
+                tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    board.swap(x, y, i, j);
+                    System.out.println("piece moved");
+                    updateBoard(board);
+                });
+                Gboard.add(tmp, i, j);
             }
         }
     }
