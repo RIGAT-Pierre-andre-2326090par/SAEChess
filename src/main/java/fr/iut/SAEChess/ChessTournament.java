@@ -42,7 +42,7 @@ public class ChessTournament {
         }
     }*/
 
-    public void inscription(String nom, String passwd) throws IOException {
+    public void inscription(String nom, String passwd, String tournamentName) throws IOException {
         ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
         for (int i = 0 ; i < playerList.size() ; ++i) {
             List<String> playerInfo = Arrays.asList(playerList.get(i).split(", "));
@@ -50,7 +50,7 @@ public class ChessTournament {
                 tournamentAttenders.add(playerList.get(i));
             }
         }
-        FileWriter fw = new FileWriter("Participants.txt", false);      // Ecrit sur le fichier passé en paramètre. Le "false" indique que le fichier sera réécrit de 0
+        FileWriter fw = new FileWriter(new File("Tournois/" + tournamentName), false);      // Ecrit sur le fichier passé en paramètre. Le "false" indique que le fichier sera réécrit de 0
         for (int i = 0 ; i < tournamentAttenders.size() ; ++i) {
             fw.write(tournamentAttenders.get(i));
             fw.write("\n");
@@ -58,23 +58,41 @@ public class ChessTournament {
         fw.close();
     }
 
-    public void bracketCreate(ArrayList<String> attenderList, String tournamentName) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
+    public ArrayList<String> bracketCreate(ArrayList<String> attenderList, String tournamentName) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
         // eloSort(attenderList
-        int nbRounds = (int)(Math.log(attenderList.size()) / Math.log(2));
+        /*int nbRounds = (int)(Math.log(attenderList.size()) / Math.log(2));*/
         ArrayList<String> bracket = new ArrayList<>();
         for (int i = 0 ; i < attenderList.size() ; i = i + 2) {
-            bracket.add(attenderList.get(i) + " VS " + attenderList.get(i + 1));
+            bracket.add(attenderList.get(i) + " /VS/ " + attenderList.get(i + 1));
         }
-        String name = "tournoi" + tournamentName;
-        FileWriter fw = new FileWriter("Tournois/" + name, false);
-        for (int i = 0 ; i < bracket.size() ; ++i) {
-            fw.write(bracket.get(i));
-            fw.write("\n");
+        if (bracket.size() == 1) {
+            FileWriter fw = new FileWriter("Tournois/" + tournamentName, false);
+            fw.write(bracket.get(0) + "is the Winner ! Congratulations");
+            fw.close();
         }
-        fw.close();
+        else {
+            FileWriter fw = new FileWriter("Tournois/" + tournamentName, false);
+            for (int i = 0; i < bracket.size(); ++i) {
+                fw.write(bracket.get(i));
+                fw.write("\n");
+            }
+            fw.close();
+        }
+        return bracket;
     }
 
-    public void tournoi() {
-        
+    public void roundGestion(File tournamentFile, int round) throws IOException {
+        ArrayList<String> bracket = bracketCreate(tournamentAttenders, tournamentFile.getName());
+        for (int i = 0 ; i < bracket.size() ; ++i) {
+            String[] match = bracket.get(i).split(" /VS/ ");
+            String player1 = match[0];
+            String player2 = match[1];
+            /*ChessController.match(player1, player2, tournamentFile.getName() + "round n°" + round + "match n°" + i);*/                                                            // Fonction à créer. S'occupe de tout ce qui fait un match entre 2 joueurs
+        }
+    }
+
+    public void tournamentGestion(File tournamentFile) throws IOException {
+        int round = 0;
+
     }
 }
