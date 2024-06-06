@@ -103,7 +103,7 @@
                                 <Insets top="20.0" />
                             </VBox.margin>
                         </MenuButton>
-                        <Button fx:id="btnJouer" alignment="CENTER" mnemonicParsing="false" prefHeight="41.0" prefWidth="319.0" style="-fx-background-color: #81b64c; -fx-border-radius: 20; -fx-font-family: &quot;globalSecondaryFont&quot;; -fx-font-weight: 800; -fx-font-size: 20;" styleClass="btn" stylesheets="@style.css" text="JOUER" textFill="WHITE">
+                        <Button fx:id="btnJouer" alignment="CENTER" mnemonicParsing="false" prefHeight="41.0" prefWidth="319.0" style="-fx-background-color: #81b64c; -fx-border-radius: 20; -fx-font-family: globalSecondaryFont;; -fx-font-weight: 800; -fx-font-size: 20;" styleClass="btn" onAction="#startTime" stylesheets="@style.css" text="JOUER" textFill="WHITE">
                             <VBox.margin>
                                 <Insets top="35.0" />
                             </VBox.margin>
@@ -154,6 +154,14 @@
                                 <Insets left="10.0" top="15.0" />
                             </HBox.margin>
                         </Label>
+                  <HBox alignment="TOP_RIGHT" prefHeight="89.0" prefWidth="489.0">
+                     <children>
+                              <Label fx:id="timerLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="43.0" prefWidth="110.0" style="-fx-font-size: 24; -fx-background-color: #2a2825;" text="10:00" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="15.0" top="15.0" />
+                           </HBox.margin></Label>
+                     </children>
+                  </HBox>
                     </children>
                 </HBox>
                 <StackPane prefHeight="485.0" prefWidth="544.0">
@@ -216,6 +224,14 @@
                             </HBox.margin>
                         </Label>
                     </children>
+                    <HBox alignment="TOP_RIGHT" prefHeight="89.0" prefWidth="489.0">
+                        <children>
+                            <Label fx:id="timerLabel2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="43.0" prefWidth="110.0" style="-fx-font-size: 24; -fx-background-color: #2a2825;" text="10:00" textFill="WHITE">
+                                <HBox.margin>
+                                    <Insets right="15.0" top="15.0" />
+                                </HBox.margin></Label>
+                        </children>
+                    </HBox>
                 </HBox>
             </children>
         </VBox>
