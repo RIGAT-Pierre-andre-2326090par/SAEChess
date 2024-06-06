@@ -58,20 +58,18 @@ public class ChessTournament {
         fw.close();
     }
 
-    public ArrayList<String> bracketCreate(ArrayList<String> attenderList, String tournamentName) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
-        // eloSort(attenderList
-        /*int nbRounds = (int)(Math.log(attenderList.size()) / Math.log(2));*/
+    public ArrayList<String> bracketCreate(ArrayList<String> attenderList, String tournamentName, int currentRound) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
         ArrayList<String> bracket = new ArrayList<>();
         for (int i = 0 ; i < attenderList.size() ; i = i + 2) {
             bracket.add(attenderList.get(i) + " /VS/ " + attenderList.get(i + 1));
         }
         if (bracket.size() == 1) {
-            FileWriter fw = new FileWriter("Tournois/" + tournamentName, false);
+            FileWriter fw = new FileWriter("Tournois/" + tournamentName + "/Tournament_Winner", false);
             fw.write(bracket.get(0) + "is the Winner ! Congratulations");
             fw.close();
         }
         else {
-            FileWriter fw = new FileWriter("Tournois/" + tournamentName, false);
+            FileWriter fw = new FileWriter("Tournois/" + tournamentName + "/Round" + currentRound, false);
             for (int i = 0; i < bracket.size(); ++i) {
                 fw.write(bracket.get(i));
                 fw.write("\n");
@@ -81,18 +79,22 @@ public class ChessTournament {
         return bracket;
     }
 
-    public void roundGestion(File tournamentFile, int round) throws IOException {
-        ArrayList<String> bracket = bracketCreate(tournamentAttenders, tournamentFile.getName());
+    public void roundGestion(String tournamentName, int round) throws IOException {
+        ArrayList<String> bracket = bracketCreate(tournamentAttenders, tournamentName, round);
         for (int i = 0 ; i < bracket.size() ; ++i) {
             String[] match = bracket.get(i).split(" /VS/ ");
             String player1 = match[0];
             String player2 = match[1];
-            /*ChessController.match(player1, player2, tournamentFile.getName() + "round n°" + round + "match n°" + i);*/                                                            // Fonction à créer. S'occupe de tout ce qui fait un match entre 2 joueurs
+            /*ChessController.match(player1, player2, tournamentFile.getName() + "round n°" + round + "match n°" + i);*/        // Fonction à créer. S'occupe de tout ce qui fait un match entre 2 joueurs
         }
     }
 
-    public void tournamentGestion(File tournamentFile) throws IOException {
+    public void tournamentGestion(String tournamentName) throws IOException {
         int round = 0;
-
+        int maxRound = (int)(Math.log(tournamentAttenders.size()) / Math.log(2));
+        while (round <= maxRound) {
+            roundGestion(tournamentName, round);
+            round += 1;
+        }
     }
 }
