@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="724.0" prefWidth="1240.0" style="-fx-background-color: #302e2b;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.SAEChess.ChessController">
+<BorderPane prefHeight="724.0" prefWidth="1240.0" style="-fx-background-color: #302e2b;" stylesheets="@style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.iut.SAEChess.ChessController">
     <center>
         <VBox prefHeight="670.0" prefWidth="539.0" style="-fx-background-color: #262522;" BorderPane.alignment="CENTER">
             <children>

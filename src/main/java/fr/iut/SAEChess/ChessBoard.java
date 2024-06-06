@@ -32,11 +32,25 @@ public class ChessBoard {
         ChessPiece tmp = board.get(x).get(y);
         board.get(x).set(y, board.get(x2).get(y2));
         board.get(x2).set(y2, tmp);
+        if (get(x, y) != null) {
+            get(x, y).setX(x2);
+            get(x, y).setY(y2);
+        } else {
+            get(x2, y2).setX(x);
+            get(x2, y2).setY(y);
+        }
     }
 
     public void take(int x, int y, int x2, int y2){
         board.get(x2).set(y2, board.get(x).get(y));
         board.get(x).set(y, null);
+        if (get(x, y) != null) {
+            get(x, y).setX(x2);
+            get(x, y).setY(y2);
+        } else {
+            get(x2, y2).setX(x);
+            get(x2, y2).setY(y);
+        }
     }
 
     public void joue(){

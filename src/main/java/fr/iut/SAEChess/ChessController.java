@@ -2,19 +2,20 @@ package fr.iut.SAEChess;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 
 public class ChessController implements Initializable {
 
@@ -26,12 +27,6 @@ public class ChessController implements Initializable {
 
     private int timeInSeconds = 600; // 10 minutes = 600 seconds
     private Timeline timeline;
-
-    @FXML
-    private void initialize() {
-        // Initialize the timer label if needed
-        updateTimerLabel();
-    }
 
     @FXML
     private Label J1;
@@ -50,9 +45,7 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            setGame();
-        });
+        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame());
     }
 
     private void setGame() {
@@ -81,27 +74,38 @@ public class ChessController implements Initializable {
     }
 
     private void setPremove(int x, int y, int[][] poss, ChessBoard board) {
-        for (int[] pos : poss) {
-            if (pos != null) {
-                int i = pos[0];
-                int j = pos[1];
+        Gboard.getChildren().clear();
+        int k = 0;
+        for (int i = 0; i < board.board.size(); i++) {
+            for (int j = 0; j < board.board.get(i).size(); j++) {
                 ImageView tmp;
                 if (board.get(i, j) != null)
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
                 else
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
-                tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    board.swap(x, y, i, j);
-                    System.out.println("piece moved");
-                    updateBoard(board);
-                });
-                Gboard.add(tmp, i, j);
+                if (Arrays.equals(new int[]{i, j}, poss[k])) {
+                    int finalI = i;
+                    int finalJ = j;
+                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                        board.swap(x, y, finalI, finalJ);
+                        System.out.println("piece moved");
+                        updateBoard(board);
+                    });
+                    k++;
+                } else {
+                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                        System.out.println("action cancel");
+                        updateBoard(board);
+                    });
+                }
+                Gboard.add(tmp, j, i);
             }
         }
     }
+
     @FXML
-    private void startTime(ActionEvent actionEvent) {
-        if (timeline != null) {
+    private void startTime() {
+        if (this.timeline != null) {
             timeline.stop();
         }
 
@@ -118,15 +122,16 @@ public class ChessController implements Initializable {
         timeline.play();
     }
 
-    private void updateTimerLabel() {
-        int minutes = timeInSeconds / 60;
-        int seconds = timeInSeconds % 60;
-        timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
-    }
     private void updateTimerLabel2() {
         int minutes = timeInSeconds / 60;
         int seconds = timeInSeconds % 60;
         timerLabel2.setText(String.format("%02d:%02d", minutes, seconds));
+    }
+
+    private void updateTimerLabel() {
+        int minutes = timeInSeconds / 60;
+        int seconds = timeInSeconds % 60;
+        timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
 
 }
