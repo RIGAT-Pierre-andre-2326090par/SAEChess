@@ -1,5 +1,7 @@
 package fr.iut.SAEChess;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +23,21 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ChessController implements Initializable {
+
+    @FXML
+    private Label timerLabel;
+
+    @FXML
+    private Label timerLabel2;
+
+    private int timeInSeconds = 600; // 10 minutes = 600 seconds
+    private Timeline timeline;
+
+    @FXML
+    private void initialize() {
+        // Initialize the timer label if needed
+        updateTimerLabel();
+    }
 
     @FXML
     private Label J1;
@@ -90,4 +108,34 @@ public class ChessController implements Initializable {
             }
         }
     }
+    @FXML
+    private void startTime(ActionEvent actionEvent) {
+        if (timeline != null) {
+            timeline.stop();
+        }
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            timeInSeconds--;
+            updateTimerLabel();
+            updateTimerLabel2();
+
+            if (timeInSeconds <= 0) {
+                timeline.stop();
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    private void updateTimerLabel() {
+        int minutes = timeInSeconds / 60;
+        int seconds = timeInSeconds % 60;
+        timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
+    }
+    private void updateTimerLabel2() {
+        int minutes = timeInSeconds / 60;
+        int seconds = timeInSeconds % 60;
+        timerLabel2.setText(String.format("%02d:%02d", minutes, seconds));
+    }
+
 }
