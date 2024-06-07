@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
+
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Objects;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class ChessController implements Initializable {
 
+    private boolean isWhiteTurn = true;
     @FXML
     private Label timerLabel;
 
@@ -26,8 +28,9 @@ public class ChessController implements Initializable {
     private Label timerLabel2;
 
     private int timeInSeconds = 600; // 10 minutes = 600 seconds
+    private int timeInSeconds2 = 600; // 10 minutes = 600 seconds
     private Timeline timeline;
-
+    private Timeline timeline2;
     @FXML
     private Label J1;
 
@@ -113,24 +116,39 @@ public class ChessController implements Initializable {
             }
         }
     }
-
+    private void Reprise(){
+        if(isWhiteTurn){
+            timeline2.stop();
+            startTime();
+        }
+        if(!isWhiteTurn){
+            timeline.stop();
+            startTime();
+        }
+    }
     @FXML
     private void startTime() {
-        if (this.timeline != null) {
-            timeline.stop();
-        }
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             timeInSeconds--;
             updateTimerLabel();
-            updateTimerLabel2();
 
             if (timeInSeconds <= 0) {
                 timeline.stop();
             }
         }));
+        timeline2 = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            timeInSeconds2--;
+            updateTimerLabel2();
+
+            if (timeInSeconds2 <= 0) {
+                timeline.stop();
+            }
+        }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        timeline2.setCycleCount(Timeline.INDEFINITE);
+        timeline2.play();
     }
 
     private void updateTimerLabel2() {
