@@ -9,6 +9,8 @@ public class ChessBoard {
     private int scoreJ1;
     private int scoreJ2;
 
+    private boolean isWhiteTurn = true;
+
     public ChessBoard() {
         scoreJ1 = 0;
         scoreJ2 = 0;
@@ -32,11 +34,6 @@ public class ChessBoard {
 
     public void swap(int x, int y, int x2, int y2){
         if (get(x2, y2) != null) {
-            set(x, y, get(x2, y2));
-            set(x2, y2, null);
-            get(x, y).setX(x);
-            get(x, y).setY(y);
-        } else if (get(x, y) != null) {
             take(x, y, x2, y2);
         } else {
             set(x2, y2, get(x, y));
@@ -44,10 +41,17 @@ public class ChessBoard {
             get(x2, y2).setX(x2);
             get(x2, y2).setY(y2);
         }
+        if (get(x2, y2) instanceof Pion) {
+            if (get(x2, y2).isBlanc() && x2 == 0) {
+                set(x2, y2, new Reine(true, x2, y2));
+            } else if (!get(x2, y2).isBlanc() && x2 == 7) {
+                set(x2, y2, new Reine(false, x2, y2));
+            }
+        }
     }
 
     public void take(int x, int y, int x2, int y2){
-        if (get(x, y).isBlanc() != get(x2, y2).isBlanc()) {
+        if (get(x, y) != null && get(x, y).isBlanc() != get(x2, y2).isBlanc()) {
             if (get(x2, y2).isBlanc()) {
                 scoreJ1 += get(x2, y2).getPoints();
             } else {
@@ -78,5 +82,13 @@ public class ChessBoard {
 
     public int getBoardSize() {
         return board.length;
+    }
+
+    public boolean isWhiteTurn() {
+        return isWhiteTurn;
+    }
+
+    public void setWhiteTurn(boolean whiteTurn) {
+        isWhiteTurn = whiteTurn;
     }
 }
