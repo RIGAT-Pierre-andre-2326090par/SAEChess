@@ -18,16 +18,4 @@ public class Roi extends ChessPiece {
             if (Math.abs(x - getX()) <= 1 && Math.abs(y - getY()) <= 1 && (Math.abs(x - getX()) + Math.abs(y - getY()) != 0)) return true;
         return false;
     }
-
-    @Override
-    public int[][] imagineAllMoves(ChessBoard board) {
-        int[][] moves = new int[8][];
-        int ind = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (isValidMove(i, j, board)) moves[ind++] = new int[]{i, j};
-            }
-        }
-        return moves;
-    }
 }
