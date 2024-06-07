@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ChessTournament {
-    private ArrayList<String> tournamentAttenders = new ArrayList<String>();
+    private static ArrayList<String> tournamentAttenders = new ArrayList<String>();
 
 
-    public ArrayList<String> readFileToArray(File file) throws IOException {
+    public static ArrayList<String> readFileToArray(File file) throws IOException {
         ArrayList<String> list = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line = br.readLine();
@@ -42,15 +42,18 @@ public class ChessTournament {
         }
     }*/
 
-    public void inscription(String nom, String passwd, String tournamentName) throws IOException {
+    public static void inscription(String nom, String passwd, String tournamentName) throws IOException {
         ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
         for (int i = 0 ; i < playerList.size() ; ++i) {
             List<String> playerInfo = Arrays.asList(playerList.get(i).split(", "));
             if (playerInfo.get(0).equals(nom) && playerInfo.get(1).equals(Integer.toString(passwd.hashCode()))) {
                 tournamentAttenders.add(playerList.get(i));
             }
+            else {
+                /*ChessControler.notRegistered()*/
+            }
         }
-        FileWriter fw = new FileWriter(new File("Tournois/" + tournamentName), false);      // Ecrit sur le fichier passé en paramètre. Le "false" indique que le fichier sera réécrit de 0
+        FileWriter fw = new FileWriter(new File("Tournois/" + tournamentName + "/Attenders.txt"), false);      // Ecrit sur le fichier passé en paramètre. Le "false" indique que le fichier sera réécrit de 0
         for (int i = 0 ; i < tournamentAttenders.size() ; ++i) {
             fw.write(tournamentAttenders.get(i));
             fw.write("\n");
@@ -58,7 +61,7 @@ public class ChessTournament {
         fw.close();
     }
 
-    public ArrayList<String> bracketCreate(ArrayList<String> attenderList, String tournamentName, int currentRound) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
+    public static ArrayList<String> bracketCreate(ArrayList<String> attenderList, String tournamentName, int currentRound) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
         ArrayList<String> bracket = new ArrayList<>();
         int nbRounds = (int)(Math.log(attenderList.size()) / Math.log(2));
         for (int i = 0 ; i < attenderList.size() ; i = i + 2) {
@@ -85,17 +88,17 @@ public class ChessTournament {
         return bracket;
     }
 
-    public void roundGestion(String tournamentName, int round) throws IOException {
+    public static void roundGestion(String tournamentName, int round) throws IOException {
         ArrayList<String> bracket = bracketCreate(tournamentAttenders, tournamentName, round);
         for (int i = 0 ; i < bracket.size() ; ++i) {
             String[] match = bracket.get(i).split(" /VS/ ");
             String player1 = match[0];
             String player2 = match[1];
-            /*ChessController.match(player1, player2, tournamentFile.getName() + "round n°" + round + "match n°" + i);*/        // Fonction à créer. S'occupe de tout ce qui fait un match entre 2 joueurs
+            /*ChessController.match(player1, player2, tournamentName + "round n°" + round + "match n°" + i);*/        // Fonction à créer. S'occupe de tout ce qui fait un match entre 2 joueurs
         }
     }
 
-    public void tournamentGestion(String tournamentName) throws IOException {
+    public static void tournamentGestion(String tournamentName) throws IOException {
         int round = 0;
         int maxRound = (int)(Math.log(tournamentAttenders.size()) / Math.log(2));
         while (round <= maxRound) {

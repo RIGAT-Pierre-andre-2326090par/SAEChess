@@ -1,35 +1,32 @@
 package fr.iut.SAEChess;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class ChessAccount {
-    static float elo;                                                          // Le classement du joueur
-    static int wins;                                                           // Le nombre de victoires du joueur
+    float elo;                                                          // Le classement du joueur
+    int wins;                                                           // Le nombre de victoires du joueur
 
     // Getters
-    public static float getElo() {
+    public float getElo() {
         return elo;
     }
-    public static int getWins() {
+    public int getWins() {
         return wins;
     }
 
     // Setters
-    public static void setElo(float elo) {
-        ChessAccount.elo = elo;
+    public void setElo(float elo) {
+        this.elo = elo;
     }
-    public static void setWins(int wins) {
-        ChessAccount.wins = wins;
+    public void setWins(int wins) {
+        this.wins = wins;
     }
 
 
-    public static ArrayList<String> readFileToArray(File file) throws IOException {
+    public ArrayList<String> readFileToArray(File file) throws IOException {
         ArrayList<String> list = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line = br.readLine();
@@ -48,7 +45,7 @@ public class ChessAccount {
 
     Cette fonction sera appelée à l'appui du bouton approprié
      */
-    public static void logIn(String nom, String passwd) {
+    public void logIn(String nom, String passwd) {
         try {
             ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
 
@@ -67,7 +64,7 @@ public class ChessAccount {
                 setWins(Integer.parseInt(playerInfo[3]));
             }
             else {
-                /*notRegistered()*/                                 // Fonction à créer. Affiche une fenêtre qui dit "pas encore inscrit"
+                /*ChessController.notRegistered()*/                                 // Fonction à créer. Affiche une fenêtre qui dit "pas encore inscrit"
             }
         }
         catch (IOException ioException){
@@ -82,7 +79,7 @@ public class ChessAccount {
 
     Cette fonction sera appelée à l'appui du bouton approprié
      */
-    public static void register(String nom, String passwd) {
+    public void register(String nom, String passwd) {
         try {
             ArrayList<String> playerList = readFileToArray(new File("Joueurs.txt"));
             System.out.println(playerList);
@@ -96,7 +93,7 @@ public class ChessAccount {
             }
             if(registered) {
                 System.out.println("Déjà inscrit");
-                /*alreadyRegistered();*/                                                // Fonction à créer. Affiche une fenêtre qui dit "déjà inscrit"
+                /*ChessControler.alreadyRegistered();*/                                                // Fonction à créer. Affiche une fenêtre qui dit "déjà inscrit"
             }
             else {
                 playerList.add(nom + ", " + passwd.hashCode() + ", 0, 0");
