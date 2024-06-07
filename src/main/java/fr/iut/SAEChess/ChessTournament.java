@@ -60,6 +60,7 @@ public class ChessTournament {
 
     public ArrayList<String> bracketCreate(ArrayList<String> attenderList, String tournamentName, int currentRound) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
         ArrayList<String> bracket = new ArrayList<>();
+        int nbRounds = (int)(Math.log(attenderList.size()) / Math.log(2));
         for (int i = 0 ; i < attenderList.size() ; i = i + 2) {
             bracket.add(attenderList.get(i) + " /VS/ " + attenderList.get(i + 1));
         }
@@ -69,12 +70,17 @@ public class ChessTournament {
             fw.close();
         }
         else {
-            FileWriter fw = new FileWriter("Tournois/" + tournamentName + "/Round" + currentRound, false);
-            for (int i = 0; i < bracket.size(); ++i) {
-                fw.write(bracket.get(i));
-                fw.write("\n");
+            if (attenderList.size() != Math.pow(2, nbRounds)) {
+                System.out.println("Pas assez de joueurs");
             }
-            fw.close();
+            else {
+                FileWriter fw = new FileWriter("Tournois/" + tournamentName + "/Round" + currentRound, false);
+                for (int i = 0; i < bracket.size(); ++i) {
+                    fw.write(bracket.get(i));
+                    fw.write("\n");
+                }
+                fw.close();
+            }
         }
         return bracket;
     }
