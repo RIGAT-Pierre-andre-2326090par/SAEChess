@@ -9,7 +9,7 @@ public class ChessBoard {
     private int scoreJ1;
     private int scoreJ2;
 
-    private boolean isWhiteTurn = true;
+
 
     public ChessBoard() {
         scoreJ1 = 0;
@@ -84,11 +84,5 @@ public class ChessBoard {
         return board.length;
     }
 
-    public boolean isWhiteTurn() {
-        return isWhiteTurn;
-    }
 
-    public void setWhiteTurn(boolean whiteTurn) {
-        isWhiteTurn = whiteTurn;
-    }
 }
