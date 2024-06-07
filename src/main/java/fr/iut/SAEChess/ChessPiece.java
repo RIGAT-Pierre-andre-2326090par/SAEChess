@@ -48,5 +48,22 @@ public abstract class ChessPiece {
 
     public abstract boolean isValidMove(int x, int y, ChessBoard board);
 
-    public abstract int[][] imagineAllMoves(ChessBoard board);
+    public int[][] imagineAllMoves(ChessBoard board) {
+        int[][] moves = new int[64][];
+        int ind = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (isValidMove(i, j, board)) moves[ind++] = new int[]{i, j};
+            }
+        }
+        return moves;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 }

@@ -55,8 +55,8 @@ public class ChessController implements Initializable {
 
     private void updateBoard(ChessBoard board) {
         Gboard.getChildren().clear();
-        for (int i = 0; i < board.board.size(); i++) {
-            for (int j = 0; j < board.board.get(i).size(); j++) {
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
                 ImageView tmp;
                 if (board.get(i, j) != null)
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
@@ -76,8 +76,8 @@ public class ChessController implements Initializable {
     private void setPremove(int x, int y, int[][] poss, ChessBoard board) {
         Gboard.getChildren().clear();
         int k = 0;
-        for (int i = 0; i < board.board.size(); i++) {
-            for (int j = 0; j < board.board.get(i).size(); j++) {
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            for (int j = 0; j < board.getBoardSize(); j++) {
                 ImageView tmp;
                 if (board.get(i, j) != null)
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));

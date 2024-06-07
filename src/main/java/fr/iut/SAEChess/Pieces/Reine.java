@@ -21,15 +21,4 @@ public class Reine extends ChessPiece {
             return true;
         }return false;
     }
-    @Override
-    public int[][] imagineAllMoves(ChessBoard board) {
-        int[][] moves = new int[50][];
-        int ind = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (isValidMove(i, j, board)) moves[ind++] = new int[]{i, j};
-            }
-        }
-        return moves;
-    }
 }
