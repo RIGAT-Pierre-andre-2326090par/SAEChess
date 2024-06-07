@@ -14,7 +14,7 @@ public class Tour extends ChessPiece {
 
     @Override
     public boolean isValidMove(int x, int y, ChessBoard board) {
-        if (x < 0 || x >= 8 || y < 0 || y >= 8) return false;
-        else return y == getY() || x == getX();
+        if (x < 0 || x >= 8 || y < 0 || y >= 8 && (x == getX() && y == getY())) return false;
+        else return y == getY() || x == getX() && x - getX() != 0 && y - getY() != 0;
     }
 }

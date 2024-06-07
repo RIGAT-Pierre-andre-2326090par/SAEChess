@@ -66,7 +66,7 @@ public class ChessController implements Initializable {
                 int finalJ = j;
                 tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     setPremove(finalI, finalJ, board.get(finalI, finalJ).imagineAllMoves(board), board);
-                    System.out.println("premove set");
+                    //System.out.println("premove set");
                 });
                 Gboard.add(tmp, j, i);
             }
@@ -79,6 +79,17 @@ public class ChessController implements Initializable {
         for (int i = 0; i < board.getBoardSize(); i++) {
             for (int j = 0; j < board.getBoardSize(); j++) {
                 ImageView tmp;
+                if (Arrays.equals(new int[]{i, j}, poss[k])) {
+                    int finalI = i;
+                    int finalJ = j;
+                    tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/led.png"))));
+                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                        board.swap(x, y, finalI, finalJ);
+                        //System.out.println("piece moved");
+                        updateBoard(board);
+                    });
+                    Gboard.add(tmp, j, i);
+                }
                 if (board.get(i, j) != null)
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
                 else
@@ -88,13 +99,13 @@ public class ChessController implements Initializable {
                     int finalJ = j;
                     tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                         board.swap(x, y, finalI, finalJ);
-                        System.out.println("piece moved");
+                        //System.out.println("piece moved");
                         updateBoard(board);
                     });
                     k++;
                 } else {
                     tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                        System.out.println("action cancel");
+                        //System.out.println("action cancel");
                         updateBoard(board);
                     });
                 }

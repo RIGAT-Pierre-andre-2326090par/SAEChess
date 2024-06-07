@@ -13,7 +13,7 @@ public class Roi extends ChessPiece {
 
     @Override
     public boolean isValidMove(int x, int y, ChessBoard board) {
-        if (x < 0 || x >= 8 || y < 0 || y >= 8) return false;
+        if (x < 0 || x >= 8 || y < 0 || y >= 8 && (x == getX() && y == getY())) return false;
         else if (board.get(x, y) == null || board.get(x, y).isBlanc() != isBlanc())
             if (Math.abs(x - getX()) <= 1 && Math.abs(y - getY()) <= 1 && (Math.abs(x - getX()) + Math.abs(y - getY()) != 0)) return true;
         return false;
