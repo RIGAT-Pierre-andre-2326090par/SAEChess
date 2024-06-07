@@ -64,12 +64,9 @@ public class ChessTournament {
     public static ArrayList<String> bracketCreate(ArrayList<String> attenderList, String tournamentName, int currentRound) throws IOException {                   // Ajoute au fichier du tournoi les différents rounds
         ArrayList<String> bracket = new ArrayList<>();
         int nbRounds = (int)(Math.log(attenderList.size()) / Math.log(2));
-        for (int i = 0 ; i < attenderList.size() ; i = i + 2) {
-            bracket.add(attenderList.get(i) + " /VS/ " + attenderList.get(i + 1));
-        }
-        if (bracket.size() == 1) {
+        if (attenderList.size() == 1) {
             FileWriter fw = new FileWriter("Tournois/" + tournamentName + "/Tournament_Winner", false);
-            fw.write(bracket.get(0) + "is the Winner ! Congratulations");
+            fw.write(attenderList.get(0) + "is the Winner ! Congratulations");
             fw.close();
         }
         else {
@@ -77,6 +74,9 @@ public class ChessTournament {
                 System.out.println("Pas assez de joueurs");
             }
             else {
+                for (int i = 0 ; i < attenderList.size() ; i = i + 2) {
+                    bracket.add(attenderList.get(i) + " /VS/ " + attenderList.get(i + 1));
+                }
                 FileWriter fw = new FileWriter("Tournois/" + tournamentName + "/Round" + currentRound, false);
                 for (int i = 0; i < bracket.size(); ++i) {
                     fw.write(bracket.get(i));
@@ -94,7 +94,13 @@ public class ChessTournament {
             String[] match = bracket.get(i).split(" /VS/ ");
             String player1 = match[0];
             String player2 = match[1];
-            /*ChessController.match(player1, player2, tournamentName + "round n°" + round + "match n°" + i);*/        // Fonction à créer. S'occupe de tout ce qui fait un match entre 2 joueurs
+            /*String winner = ChessController.match(player1, player2, tournamentName + "round n°" + round + "match n°" + i);        // Fonction à créer. S'occupe de tout ce qui fait un match entre 2 joueurs
+            if (winner == player1) {
+                tournamentAttenders.remove(player2);
+            }
+            else if (winner == player2) {
+                tournamentAttenders.remove(player1);
+            }*/
         }
     }
 
