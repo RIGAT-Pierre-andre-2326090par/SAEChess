@@ -68,8 +68,8 @@ public class ChessController implements Initializable {
                 int finalI = i;
                 int finalJ = j;
                 tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    setPremove(finalI, finalJ, board.get(finalI, finalJ).imagineAllMoves(board), board);
-                    //System.out.println("premove set");
+                    if (isWhiteTurn == board.get(finalI, finalJ).isBlanc())
+                        setPremove(finalI, finalJ, board.get(finalI, finalJ).imagineAllMoves(board), board);
                 });
                 Gboard.add(tmp, j, i);
             }
@@ -88,7 +88,6 @@ public class ChessController implements Initializable {
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/led.png"))));
                     tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                         board.swap(x, y, finalI, finalJ);
-                        //System.out.println("piece moved");
                         updateBoard(board);
                     });
                     Gboard.add(tmp, j, i);
@@ -102,19 +101,19 @@ public class ChessController implements Initializable {
                     int finalJ = j;
                     tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                         board.swap(x, y, finalI, finalJ);
-                        //System.out.println("piece moved");
+                        isWhiteTurn = !isWhiteTurn;
                         updateBoard(board);
                     });
                     k++;
                 } else {
                     tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                        //System.out.println("action cancel");
                         updateBoard(board);
                     });
                 }
                 Gboard.add(tmp, j, i);
             }
         }
+
     }
     private void Reprise(){
         if(isWhiteTurn){
