@@ -6,7 +6,7 @@ import fr.iut.SAEChess.ChessPiece;
 public class Reine extends ChessPiece {
 
     public Reine(boolean blanc, int x, int y) {
-        super(blanc, "", x, y, 3);
+        super(blanc, "", x, y, 9);
         if (blanc) setImg("reineB.png");
         else setImg("reineN.png");
     }

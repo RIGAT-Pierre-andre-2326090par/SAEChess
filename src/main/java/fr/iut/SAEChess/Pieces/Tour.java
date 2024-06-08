@@ -14,8 +14,6 @@ public class Tour extends ChessPiece {
 
     @Override
     public boolean isValidMove(int x, int y, ChessBoard board) {
-        System.out.println(x);
-        System.out.println(y);
         if (x < 0 || x >= 8 || y < 0 || y >= 8 ||
                 (x == getX() && y == getY()) ||
                 (board.get(x, y) != null && board.get(x, y).isBlanc() == isBlanc())) return false;
