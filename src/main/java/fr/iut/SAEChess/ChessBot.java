@@ -1,19 +1,36 @@
 package fr.iut.SAEChess;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ChessBot {
+
     private final Random random = new Random();
+
+    private List<int[]> sortMoves(List<int[]> moves) {
+        Collections.sort(moves, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] s1, int[] s2) {
+                return Integer.compare(s1[4], s2[4]);
+            }
+        });
+        for (int[] move : moves) {
+            System.out.println(Arrays.toString(move));
+        }
+        System.out.println("");
+        return moves;
+    }
 
     public int[] getMove(ChessBoard board, boolean isWhite) {
         List<int[]> legalMoves = getAllLegalMoves(board, isWhite);
         if (legalMoves.isEmpty()) {
-            return null; // No legal moves available
+            return null;
         }
-
-        return legalMoves.get(random.nextInt(legalMoves.size()));
+        sortMoves(legalMoves);
+        if (legalMoves.get(legalMoves.size() - 1)[4] != 0) {
+            return legalMoves.get(legalMoves.size() - 1);
+        } else {
+            return legalMoves.get(random.nextInt(legalMoves.size()));
+        }
     }
 
     private List<int[]> getAllLegalMoves(ChessBoard board, boolean isWhite) {
@@ -24,8 +41,12 @@ public class ChessBot {
                 if (piece != null && piece.isBlanc() == isWhite) {
                     int[][] possibleMoves = piece.imagineAllMoves(board);
                     for (int[] move : possibleMoves) {
-                        if (move != null && piece.isValidMove(move[0], move[1], board)) {
-                            legalMoves.add(new int[]{i, j, move[0], move[1]});
+                        if (move != null) {
+                            int score = 0;
+                            if (board.get(move[0], move[1]) != null) {
+                                score = board.get(move[0], move[1]).getPoints();
+                            }
+                            legalMoves.add(new int[]{i, j, move[0], move[1], score});
                         }
                     }
                 }

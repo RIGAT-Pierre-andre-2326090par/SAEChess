@@ -101,8 +101,8 @@ public class ChessController implements Initializable {
             System.exit(0);
         }
         isWhiteTurn = !isWhiteTurn;
-        updateBoard(board);
         if (isBotPlaying && !isWhiteTurn) playBotMove();
+        updateBoard(board);
         Reprise();
     }
 
@@ -183,11 +183,10 @@ public class ChessController implements Initializable {
     }
 
     private void playBotMove() {
-        int[] move = bot.getMove(board, false); // Bot plays as black
+        int[] move = bot.getMove(board, false);
         if (move != null) {
             board.swap(move[0], move[1], move[2], move[3]);
-            updateBoard(board);
-            isWhiteTurn = true;
+            isWhiteTurn = !isWhiteTurn;
         }
     }
 }
