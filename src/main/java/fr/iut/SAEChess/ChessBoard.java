@@ -9,8 +9,6 @@ public class ChessBoard {
     private int scoreJ1;
     private int scoreJ2;
 
-
-
     public ChessBoard() {
         scoreJ1 = 0;
         scoreJ2 = 0;
@@ -52,7 +50,7 @@ public class ChessBoard {
 
     public void take(int x, int y, int x2, int y2){
         if (get(x, y) != null && get(x, y).isBlanc() != get(x2, y2).isBlanc()) {
-            if (get(x2, y2).isBlanc()) {
+            if (get(x, y).isBlanc()) {
                 scoreJ1 += get(x2, y2).getPoints();
             } else {
                 scoreJ2 += get(x2, y2).getPoints();

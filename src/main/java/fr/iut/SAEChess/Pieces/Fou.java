@@ -18,13 +18,36 @@ public class Fou extends ChessPiece {
                 (board.get(x, y) != null && board.get(x, y).isBlanc() == isBlanc())) return false;
         int deltaX = x - this.getX();
         int deltaY = y - this.getY();
-        if (Math.abs(deltaX) == Math.abs(deltaY) && deltaX != 0 && deltaY != 0) {
-            int j = getY() + 1;
-            for (int i = getX() + 1; i < x && j < y; i++) {
-                if (board.get(i, j) != null) return false;
-                j++;
+        if (Math.abs(deltaX) == Math.abs(deltaY)) {
+            if (x > getX() && y > getY()) {
+                int j = getY() + 1;
+                for (int i = getX() + 1; i < x && j < y; i++) {
+                    if (board.get(i, j) != null) return false;
+                    j++;
+                }
+                return true;
+            } else if (x > getX() && y < getY()) {
+                int j = getY() - 1;
+                for (int i = getX() + 1; i < x && j > y; i++) {
+                    if (board.get(i, j) != null) return false;
+                    j--;
+                }
+                return true;
+            } else if (x < getX() && y > getY()) {
+                int j = getY() + 1;
+                for (int i = getX() - 1; i > x && j < y; i--) {
+                    if (board.get(i, j) != null) return false;
+                    j++;
+                }
+                return true;
+            } else if (x < getX() && y < getY()) {
+                int j = getY() - 1;
+                for (int i = getX() - 1; i > x && j > y; i--) {
+                    if (board.get(i, j) != null) return false;
+                    j--;
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }

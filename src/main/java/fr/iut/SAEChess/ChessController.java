@@ -33,11 +33,17 @@ public class ChessController implements Initializable {
     private Label J1;
 
     private ChessBot bot;
+
+    private boolean isBotPlaying = false;
+
     @FXML
     private Label J2;
 
     @FXML
     private Button btnJouer;
+
+    @FXML
+    private Button btnBot;
 
     @FXML
     private Button btnTournoi;
@@ -49,13 +55,20 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame());
+        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame(false));
+        btnBot.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame(true));
         bot = new ChessBot();
     }
 
-    private void setGame() {
+    private void setGame(boolean bot) {
         board = new ChessBoard();
         updateBoard(board);
+        isBotPlaying = bot;
+        if (isBotPlaying) {
+            J2.setText("Bot");
+        } else {
+            J2.setText("Adversaire");
+        }
     }
 
     private void updateBoard(ChessBoard board) {
@@ -78,6 +91,21 @@ public class ChessController implements Initializable {
         }
     }
 
+    public void movePiece(int x, int y, int finalI, int finalJ, ChessBoard board) {
+        board.swap(x, y, finalI, finalJ);
+        if (board.getScoreJ1() >= 40) {
+            System.out.println(J1.getText() + " gagnez");
+            System.exit(0);
+        } else if (board.getScoreJ2() >= 40) {
+            System.out.println(J2.getText() + " gagne");
+            System.exit(0);
+        }
+        isWhiteTurn = !isWhiteTurn;
+        updateBoard(board);
+        if (isBotPlaying && !isWhiteTurn) playBotMove();
+        Reprise();
+    }
+
     private void setPremove(int x, int y, int[][] poss, ChessBoard board) {
         Gboard.getChildren().clear();
         int k = 0;
@@ -88,13 +116,7 @@ public class ChessController implements Initializable {
                     int finalI = i;
                     int finalJ = j;
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/led.png"))));
-                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                        board.swap(x, y, finalI, finalJ);
-                        isWhiteTurn = !isWhiteTurn;
-                        updateBoard(board);
-                        //if (!isWhiteTurn) playBotMove();
-                        Reprise();
-                    });
+                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> movePiece(x, y, finalI, finalJ, board));
                     Gboard.add(tmp, j, i);
                 }
                 if (board.get(i, j) != null)
@@ -104,13 +126,7 @@ public class ChessController implements Initializable {
                 int finalI = i;
                 int finalJ = j;
                 if (poss[k] != null && Arrays.equals(new int[]{i, j}, poss[k])) {
-                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                        board.swap(x, y, finalI, finalJ);
-                        isWhiteTurn = !isWhiteTurn;
-                        updateBoard(board);
-                        //if (!isWhiteTurn) playBotMove();
-                        Reprise();
-                    });
+                    tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> movePiece(x, y, finalI, finalJ, board));
                     k++;
                 } else tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> updateBoard(board));
                 Gboard.add(tmp, j, i);
@@ -130,6 +146,11 @@ public class ChessController implements Initializable {
 
     @FXML
     private void startTime() {
+        timeInSeconds = 600;
+        timeInSeconds2 = 600;
+        timeline = null;
+        timeline2 = null;
+
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             timeInSeconds--;
             updateTimerLabel();
