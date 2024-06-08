@@ -13,13 +13,15 @@ public class Fou extends ChessPiece {
 
     @Override
     public boolean isValidMove(int x, int y, ChessBoard board) {
-        if (x < 0 || x >= 8 || y < 0 || y >= 8 && (x == getX() && y == getY())) return false;
+        if (x < 0 || x >= 8 || y < 0 || y >= 8 ||
+                (x == getX() && y == getY()) ||
+                (board.get(x, y) != null && board.get(x, y).isBlanc() == isBlanc())) return false;
         int deltaX = x - this.getX();
         int deltaY = y - this.getY();
         if (Math.abs(deltaX) == Math.abs(deltaY) && deltaX != 0 && deltaY != 0) {
-            int j = y;
-            for (int i = x; i < getX() && j < getY(); i++) {
-
+            int j = getY() + 1;
+            for (int i = getX() + 1; i < x && j < y; i++) {
+                if (board.get(i, j) != null) return false;
                 j++;
             }
             return true;
