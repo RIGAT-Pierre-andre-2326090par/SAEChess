@@ -10,12 +10,15 @@ public abstract class ChessPiece {
 
     private int points;
 
-    public ChessPiece(boolean blanc, String img, int x, int y, int point) {
+    private String piece;
+
+    public ChessPiece(boolean blanc, String img, int x, int y, int point, String piece) {
         this.blanc = blanc;
         this.img = img;
         this.x = x;
         this.y = y;
         this.points = point;
+        this.piece = piece;
     }
 
     public boolean isBlanc() {
@@ -63,7 +66,7 @@ public abstract class ChessPiece {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public String getPiece() {
+        return piece;
     }
 }

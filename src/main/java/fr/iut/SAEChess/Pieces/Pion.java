@@ -6,7 +6,7 @@ import fr.iut.SAEChess.ChessPiece;
 public class Pion extends ChessPiece {
 
     public Pion(boolean blanc, int x, int y) {
-        super(blanc, "", x, y, 1);
+        super(blanc, "", x, y, 1, "");
         if (blanc) setImg("pionB.png");
         else setImg("pionN.png");
     }

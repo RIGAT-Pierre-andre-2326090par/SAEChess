@@ -5,7 +5,7 @@ import fr.iut.SAEChess.ChessPiece;
 
 public class Cavalier extends ChessPiece {
     public Cavalier(boolean blanc, int x, int y) {
-        super(blanc, "", x, y, 3);
+        super(blanc, "", x, y, 3, "C");
         if (blanc) setImg("cavalierB.png");
         else setImg("cavalierN.png");
     }

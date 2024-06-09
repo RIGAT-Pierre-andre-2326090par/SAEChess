@@ -6,7 +6,7 @@ import fr.iut.SAEChess.ChessPiece;
 public class Tour extends ChessPiece {
 
     public Tour(boolean blanc, int x, int y) {
-        super(blanc, "", x, y, 5);
+        super(blanc, "", x, y, 5, "T");
         if (blanc) setImg("tourB.png");
         else setImg("tourN.png");
     }
