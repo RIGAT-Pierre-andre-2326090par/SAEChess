@@ -6,18 +6,11 @@ public class ChessBot {
 
     private final Random random = new Random();
 
-    private List<int[]> sortMoves(List<int[]> moves) {
-        Collections.sort(moves, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] s1, int[] s2) {
-                return Integer.compare(s1[4], s2[4]);
-            }
-        });
-        for (int[] move : moves) {
+    private void sortMoves(List<int[]> moves) {
+        moves.sort(Comparator.comparingInt(s -> s[4]));
+        /*for (int[] move : moves) {
             System.out.println(Arrays.toString(move));
-        }
-        System.out.println("");
-        return moves;
+        }*/
     }
 
     public int[] getMove(ChessBoard board, boolean isWhite) {

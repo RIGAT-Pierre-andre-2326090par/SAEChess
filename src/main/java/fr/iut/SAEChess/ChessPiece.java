@@ -4,13 +4,13 @@ public abstract class ChessPiece {
 
     private int x, y;
 
-    private final boolean blanc;
+    private boolean blanc;
 
     private String img;
 
-    private int points;
+    private final int points;
 
-    private String piece;
+    private final String piece;
 
     public ChessPiece(boolean blanc, String img, int x, int y, int point, String piece) {
         this.blanc = blanc;
@@ -19,6 +19,10 @@ public abstract class ChessPiece {
         this.y = y;
         this.points = point;
         this.piece = piece;
+    }
+
+    public void setBlanc(boolean blanc) {
+        this.blanc = blanc;
     }
 
     public boolean isBlanc() {

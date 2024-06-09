@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -102,6 +103,7 @@ public class ChessController implements Initializable {
         min15.setOnAction(actionEvent -> temps.setText(min15.getText()));
         min30.setOnAction(actionEvent -> temps.setText(min30.getText()));
         bot = new ChessBot();
+        btnJouer.setVisible(false);
         btnPause.setVisible(false);
         btnExport.setVisible(false);
     }
@@ -149,7 +151,7 @@ public class ChessController implements Initializable {
     }
 
     private void setGame(boolean bot) {
-        btnPause.setVisible(true);
+        //btnPause.setVisible(true);
         setTime();
         resetTime();
         startTime();
@@ -188,10 +190,10 @@ public class ChessController implements Initializable {
         board.swap(x, y, finalI, finalJ);
         if (board.getScoreJ1() >= 40) {
             System.out.println(J1.getText() + " gagnez");
-            btnExport.setVisible(true);
+            //btnExport.setVisible(true);
         } else if (board.getScoreJ2() >= 40) {
             System.out.println(J2.getText() + " gagne");
-            btnExport.setVisible(true);
+            //btnExport.setVisible(true);
         } else {
             isWhiteTurn = !isWhiteTurn;
             updateBoard(board);
@@ -299,31 +301,52 @@ public class ChessController implements Initializable {
 
     @FXML
     public void importCSV() {
+        if (board == null) setGame(false);
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
-
-        if (file != null && file.getName().contains(".csv"))
-            exportPartie.loadCsv(file);
+        List<String[]> partie = null;
+        if (file != null && file.getName().contains(".csv")) {
+            partie = exportPartie.importCsv(file, this);
+        }
+        for (String[] strings : partie) {
+            board.stringToCoup(strings[0]);
+            board.stringToCoup(strings[1]);
+        }
+        board.setPartie(partie);
     }
 
     @FXML
     public void importTmpCSV() {
+        if (board == null) setGame(false);
         File file = new File(Objects.requireNonNull(ChessController.class.getResource("tmp.csv")).getFile());
-        exportPartie.exportCsv(file);
+        List<String[]> partie = exportPartie.importCsv(file, this);
+        for (String[] strings : partie) {
+            board.stringToCoup(strings[0]);
+            board.stringToCoup(strings[1]);
+        }
+        board.setPartie(partie);
     }
 
     @FXML
     public void exportTmpCSV() {
         File file = new File(Objects.requireNonNull(ChessController.class.getResource("tmp.csv")).getFile());
-        exportPartie.exportCsv(file);
+        exportPartie.exportCsv(file, board.getPartie(), isBotPlaying);
+        System.exit(0);
     }
 
     @FXML
     public void exportCSV() {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
-
         if (file != null && file.getName().contains(".csv"))
-            exportPartie.exportCsv(file);
+            exportPartie.exportCsv(file, board.getPartie(), isBotPlaying);
+    }
+
+    public boolean getIsBotPlaying() {
+        return isBotPlaying;
+    }
+
+    public void setIsBotPlaying(boolean isBotPlaying) {
+        this.isBotPlaying = isBotPlaying;
     }
 }

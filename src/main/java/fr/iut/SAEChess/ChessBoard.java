@@ -4,6 +4,7 @@ import fr.iut.SAEChess.Pieces.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class ChessBoard {
 
@@ -14,6 +15,9 @@ public class ChessBoard {
 
     private List<String[]> partie = new ArrayList<>();
     private String[] coup = new String[2];
+
+    private Function<Integer, Integer> lambda = (x) -> (x * -1) + 8;
+    private Function<Integer, Integer> lambda2 = (x) -> (x - 8) / -1;
 
     public ChessBoard() {
         scoreJ1 = 0;
@@ -41,7 +45,10 @@ public class ChessBoard {
             take(x, y, x2, y2);
         } else {
             if (get(x, y).isBlanc()) {
-                coup[0] = "";
+                coup[0] = coupToString(x, y, x2, y2, false);
+            } else {
+                coup[1] = coupToString(x, y, x2, y2, false);
+                partie.add(coup.clone());
             }
             set(x2, y2, get(x, y));
             set(x, y, null);
@@ -61,8 +68,11 @@ public class ChessBoard {
         if (get(x, y) != null && get(x, y).isBlanc() != get(x2, y2).isBlanc()) {
             if (get(x, y).isBlanc()) {
                 scoreJ1 += get(x2, y2).getPoints();
+                coup[0] = coupToString(x, y, x2, y2, true);
             } else {
                 scoreJ2 += get(x2, y2).getPoints();
+                coup[1] = coupToString(x, y, x2, y2, true);
+                partie.add(coup.clone());
             }
             set(x2, y2, get(x, y));
             get(x2, y2).setX(x2);
@@ -75,22 +85,13 @@ public class ChessBoard {
         return scoreJ1;
     }
 
-    public void setScoreJ1(int scoreJ1) {
-        this.scoreJ1 = scoreJ1;
-    }
-
     public int getScoreJ2() {
         return scoreJ2;
-    }
-
-    public void setScoreJ2(int scoreJ2) {
-        this.scoreJ2 = scoreJ2;
     }
 
     public int getBoardSize() {
         return board.length;
     }
-
 
     public List<String[]> getPartie() {
         return partie;
@@ -112,6 +113,78 @@ public class ChessBoard {
             case 6: tmp = tmp + "g"; break;
             case 7: tmp = tmp + "h"; break;
         }
-        return tmp + Integer.toString(x);
+        return tmp + lambda.apply(x);
+    }
+
+    private ChessPiece stringtoPiece(char piece) {
+        ChessPiece tmp;
+        switch (piece) {
+            case 'F': tmp = new Fou(true, -1, -1); break;
+            case 'D': tmp = new Reine(true, -1, -1); break;
+            case 'R': tmp = new Roi(true, -1, -1); break;
+            case 'T': tmp = new Tour(true, -1, -1); break;
+            case 'C': tmp = new Cavalier(true, -1, -1); break;
+            default: tmp = new Pion(true, -1, -1); break;
+        }
+        return tmp;
+    }
+
+    private String posToString(int x, int y) {
+        String tmp = "";
+        switch (y) {
+            case 0: tmp = "a"; break;
+            case 1: tmp = "b"; break;
+            case 2: tmp = "c"; break;
+            case 3: tmp = "d"; break;
+            case 4: tmp = "e"; break;
+            case 5: tmp = "f"; break;
+            case 6: tmp = "g"; break;
+            case 7: tmp = "h"; break;
+        }
+        return tmp + lambda.apply(x);
+    }
+
+    private int[] stringToPos(char pos1, char pos2){
+        int[] tmp = new int[2];
+        switch (pos1) {
+            case 'a': tmp[1] = 7; break;
+            case 'b': tmp[1] = 6; break;
+            case 'c': tmp[1] = 5; break;
+            case 'd': tmp[1] = 4; break;
+            case 'e': tmp[1] = 3; break;
+            case 'f': tmp[1] = 2; break;
+            case 'g': tmp[1] = 1; break;
+            case 'h': tmp[1] = 0; break;
+        }
+        tmp[0] = lambda2.apply(Character.getNumericValue(pos2));
+        return tmp;
+    }
+
+    public String coupToString(int x, int y, int x2, int y2, boolean take){
+        String tmp = "";
+        tmp = tmp + piecetoString(x, y);
+        if (take)
+            tmp = tmp + "x" + piecetoString(x2, y2);
+        else
+            tmp = tmp + posToString(x2, y2);
+        System.out.println(tmp);
+        return tmp;
+    }
+
+    public void stringToCoup(String str){
+        int[] tmp = new int[4];
+        ChessPiece piece = stringtoPiece(str.charAt(0));
+        int[] tmp2;
+        if (piece instanceof Pion) {
+            tmp2 = stringToPos(str.charAt(0), str.charAt(1));
+        } else {
+            tmp2 = stringToPos(str.charAt(1), str.charAt(2));
+        }
+        tmp[0] = tmp2[0];
+        tmp[1] = tmp2[1];
+        tmp2 = stringToPos(str.charAt(str.length() - 2), str.charAt(str.length() - 1));
+        tmp[2] = tmp2[0];
+        tmp[3] = tmp2[1];
+        swap(tmp[0], tmp[1], tmp[2], tmp[3]);
     }
 }
