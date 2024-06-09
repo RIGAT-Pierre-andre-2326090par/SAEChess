@@ -2,12 +2,18 @@ package fr.iut.SAEChess;
 
 import fr.iut.SAEChess.Pieces.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChessBoard {
 
     private final ChessPiece[][] board;
 
     private int scoreJ1;
     private int scoreJ2;
+
+    private List<String[]> partie = new ArrayList<>();
+    private String[] coup = new String[2];
 
     public ChessBoard() {
         scoreJ1 = 0;
@@ -34,6 +40,9 @@ public class ChessBoard {
         if (get(x2, y2) != null) {
             take(x, y, x2, y2);
         } else {
+            if (get(x, y).isBlanc()) {
+                coup[0] = "";
+            }
             set(x2, y2, get(x, y));
             set(x, y, null);
             get(x2, y2).setX(x2);
@@ -83,4 +92,26 @@ public class ChessBoard {
     }
 
 
+    public List<String[]> getPartie() {
+        return partie;
+    }
+
+    public void setPartie(List<String[]> partie) {
+        this.partie = partie;
+    }
+
+    private String piecetoString(int x, int y) {
+        String tmp = get(x, y).getPiece();
+        switch (y) {
+            case 0: tmp = tmp + "a"; break;
+            case 1: tmp = tmp + "b"; break;
+            case 2: tmp = tmp + "c"; break;
+            case 3: tmp = tmp + "d"; break;
+            case 4: tmp = tmp + "e"; break;
+            case 5: tmp = tmp + "f"; break;
+            case 6: tmp = tmp + "g"; break;
+            case 7: tmp = tmp + "h"; break;
+        }
+        return tmp + Integer.toString(x);
+    }
 }

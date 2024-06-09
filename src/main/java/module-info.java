@@ -10,6 +10,7 @@ module fr.iut.SAEChess {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires com.opencsv;
 
     opens fr.iut.SAEChess to javafx.fxml;
     exports fr.iut.SAEChess;
