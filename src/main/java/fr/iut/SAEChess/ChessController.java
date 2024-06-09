@@ -25,10 +25,10 @@ public class ChessController implements Initializable {
 
     private boolean isWhiteTurn = true;
     @FXML
-    private Label timerLabel;
+    private Label timerLabel; // timer 1
 
     @FXML
-    private Label timerLabel2;
+    private Label timerLabel2;  // timer 2
 
     private int timeInSeconds = 600; // 10 minutes = 600 seconds
     private int timeInSeconds2 = 600; // 10 minutes = 600 seconds
@@ -93,8 +93,8 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame(false));
-        btnBot.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame(true));
+        btnJouer.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame(false)); // quand on appuie sur le bouton btnJouer cela ne lance pas la partie avec le bot mais lance une partie où on peut jouer à deux
+        btnBot.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> setGame(true)); // quand on appuie sur le bouton btnBot cela lance la partie avec le bot
         min1.setOnAction(actionEvent -> temps.setText(min1.getText()));
         min2.setOnAction(actionEvent -> temps.setText(min2.getText()));
         min3.setOnAction(actionEvent -> temps.setText(min3.getText()));
@@ -103,11 +103,13 @@ public class ChessController implements Initializable {
         min15.setOnAction(actionEvent -> temps.setText(min15.getText()));
         min30.setOnAction(actionEvent -> temps.setText(min30.getText()));
         bot = new ChessBot();
-        btnJouer.setVisible(false);
         btnPause.setVisible(false);
         btnExport.setVisible(false);
     }
 
+    /**
+     * récupère le temps rentrer dans le menuButton et l'applique au timer des joueurs
+     */
     private void setTime() {
         switch (temps.getText()) {
             case "1min": {
@@ -150,29 +152,37 @@ public class ChessController implements Initializable {
         updateTimerLabel2();
     }
 
+    /**
+     * initialise le début d'une partie, avec ou sans bot
+     * @param bot
+     */
     private void setGame(boolean bot) {
         //btnPause.setVisible(true);
         setTime();
         resetTime();
         startTime();
         board = new ChessBoard();
-        updateBoard(board);
+        updateBoard(board); // cela affiche les pièces jouer commencer à jouer
         isBotPlaying = bot;
-        if (isBotPlaying) {
+        if (isBotPlaying) { // affiche le nom du joueur adverse
             J2.setText("Bot");
         } else {
             J2.setText("Adversaire");
         }
     }
 
+    /**
+     * affiche les pièces dans l'échiquier.
+     * @param board
+     */
     private void updateBoard(ChessBoard board) {
         Gboard.getChildren().clear();
         for (int i = 0; i < board.getBoardSize(); i++) {
             for (int j = 0; j < board.getBoardSize(); j++) {
                 ImageView tmp;
-                if (board.get(i, j) != null)
+                if (board.get(i, j) != null) // si il y a une pièce présente sur cette cases alors afficher la pièce correspondante
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/" + board.get(i, j).getImg()))));
-                else
+                else //sinon afficher une image transparente
                     tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/vide.png"))));
                 int finalI = i;
                 int finalJ = j;
@@ -186,8 +196,17 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     * déplace la pièce, vérifie que la partie n'est pas gagnante(que l'un des 2 roi ne soit plus) et s'occupe de la promotion des pions(les pions deviennet des dammes si
+     * @param x
+     * @param y
+     * @param finalI
+     * @param finalJ
+     * @param board
+     * @throws InterruptedException
+     */
     public void movePiece(int x, int y, int finalI, int finalJ, ChessBoard board) throws InterruptedException {
-        board.swap(x, y, finalI, finalJ);
+        board.swap(x, y, finalI, finalJ); // deplace les pièces
         if (board.getScoreJ1() >= 40) {
             System.out.println(J1.getText() + " gagnez");
             //btnExport.setVisible(true);
