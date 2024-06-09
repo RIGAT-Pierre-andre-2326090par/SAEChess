@@ -197,7 +197,7 @@ public class ChessController implements Initializable {
     }
 
     /**
-     * déplace la pièce, vérifie que la partie n'est pas gagnante(que l'un des 2 roi ne soit plus) et s'occupe de la promotion des pions(les pions deviennet des dammes si
+     * déplace la pièce, vérifie que la partie n'est pas gagnante(que l'un des 2 roi ne soit plus) et s'occupe de la promotion des pions(les pions deviennet des dammes si il on atteint le côté opposé de l'échiquier)
      * @param x
      * @param y
      * @param finalI
@@ -221,6 +221,13 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     * sert à visualiser les coups d'une pièces sélectionner
+     * @param x
+     * @param y
+     * @param poss
+     * @param board
+     */
     private void setPremove(int x, int y, int[][] poss, ChessBoard board) {
         Gboard.getChildren().clear();
         int k = 0;
@@ -230,7 +237,7 @@ public class ChessController implements Initializable {
                 if (poss[k] != null && Arrays.equals(new int[]{i, j}, poss[k])) {
                     int finalI = i;
                     int finalJ = j;
-                    tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/led.png"))));
+                    tmp = new ImageView(Objects.requireNonNull(String.valueOf(ChessController.class.getResource("img/led.png")))); // quand on appuie sur une pièce les coups qu'il peut faire sera afficher avec une image
                     tmp.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                         try {
                             movePiece(x, y, finalI, finalJ, board);
@@ -261,21 +268,30 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     *  Pour alterner le timer des blancs et des noirs
+     */
     private void Reprise() {
-        if (isWhiteTurn) {
+        if (isWhiteTurn) { // si c'est le tour des blancs le timer des noirs s'arrette et le timer des blancs commence
             timeline.stop();
             timeline2.play();
-        } else {
+        } else { // sinon le timer des noirs commence et le timer des blancs s'arrête
             timeline2.stop();
             timeline.play();
         }
     }
 
+    /**
+     * remet les pendules à 0
+     */
     private void resetTime() {
         timeline = null;
         timeline2 = null;
     }
 
+    /**
+     * démarre les pendules des joueurs
+     */
     private void startTime() {
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             timeInSeconds--;
@@ -296,18 +312,27 @@ public class ChessController implements Initializable {
         timeline2.play();
     }
 
+    /**
+     * met à jour le label affichant le temps restant au joueur 2
+     */
     private void updateTimerLabel2() {
         int minutes = timeInSeconds2 / 60;
         int seconds = timeInSeconds2 % 60;
         timerLabel2.setText(String.format("%02d:%02d", minutes, seconds));
     }
 
+    /**
+     * met à jour le label affichant le temps restant au joueur 1
+     */
     private void updateTimerLabel() {
         int minutes = timeInSeconds / 60;
         int seconds = timeInSeconds % 60;
         timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
 
+    /**
+     * le bot joue son coup
+     */
     private void playBotMove() {
         int[] move = bot.getMove(board, false);
         if (move != null) {
@@ -318,6 +343,9 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     * import une partie enregistrer au format CSV(ne marche pas)
+     */
     @FXML
     public void importCSV() {
         if (board == null) setGame(false);
@@ -334,6 +362,9 @@ public class ChessController implements Initializable {
         board.setPartie(partie);
     }
 
+    /**
+     * importe la partie sauvegarder sur le fichier temporaire tmp.csv(ne marche pas)
+     */
     @FXML
     public void importTmpCSV() {
         if (board == null) setGame(false);
@@ -346,6 +377,9 @@ public class ChessController implements Initializable {
         board.setPartie(partie);
     }
 
+    /**
+     * exporte la partie dans un fichier au format CSV
+     */
     @FXML
     public void exportTmpCSV() {
         File file = new File(Objects.requireNonNull(ChessController.class.getResource("tmp.csv")).getFile());
@@ -353,6 +387,9 @@ public class ChessController implements Initializable {
         System.exit(0);
     }
 
+    /**
+     * exporte la partie en cours sur le fichier tmp.csv
+     */
     @FXML
     public void exportCSV() {
         FileChooser fileChooser = new FileChooser();
@@ -361,10 +398,9 @@ public class ChessController implements Initializable {
             exportPartie.exportCsv(file, board.getPartie(), isBotPlaying);
     }
 
-    public boolean getIsBotPlaying() {
-        return isBotPlaying;
-    }
-
+    /**
+     * @param isBotPlaying définit si le bot joue cette partie ou non
+     */
     public void setIsBotPlaying(boolean isBotPlaying) {
         this.isBotPlaying = isBotPlaying;
     }
